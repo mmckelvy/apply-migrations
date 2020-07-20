@@ -1,0 +1,11 @@
+{
+  "name": "@mmckelvy/apply-migrations",
+  "version": "1.0.0",
+  "description": "Apply database migrations programmatically",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mark McKelvy",
+  "license": "MIT"
+}
