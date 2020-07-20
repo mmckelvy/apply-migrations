@@ -6,18 +6,17 @@ const { query } = require('@mmckelvy/pg-query');
 
 const versionSort = require('./version-sort');
 
-module.exports = async function applyMigrations({ db }) {
-  const pool = new Pool(db);
-  const migrationDir = path.join(__dirname, '../src');
-
-  const allMigrations = fs.readdirSync(migrationDir);
+module.exports = async function applyMigrations({ pool, src }) {
+  const allMigrations = fs.readdirSync(src);
   let appliedMigrations;
 
   try {
-    appliedMigrations = await queryDb({
+    const results = await query({
       pool,
       sql: `${__dirname}/get-migrations.sql`
     });
+
+    appliedMigrations = results.rows;
 
     console.log('Migrations already applied:\n');
     console.log(appliedMigrations);
@@ -44,7 +43,7 @@ module.exports = async function applyMigrations({ db }) {
     // apply the migration
     await query({
       pool,
-      sql: `${migrationDir}/${migration}`
+      sql: `${src}/${migration}`
     });
 
     // update the migration table in the db
@@ -58,6 +57,4 @@ module.exports = async function applyMigrations({ db }) {
 
     console.log(`Migration ${migration} applied.`);
   }
-
-  pool.end().then(() => console.log('Ended the migrations pool'));
 };
