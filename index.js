@@ -1,6 +1,5 @@
 const path = require('path');
 const fs = require('fs');
-const { Pool } = require('pg');
 const diffArrays = require('@mmckelvy/diff-arrays');
 const { query } = require('@mmckelvy/pg-query');
 
