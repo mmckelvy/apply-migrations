@@ -1,13 +1,17 @@
 {
   "name": "@mmckelvy/apply-migrations",
   "version": "1.0.0",
-  "description": "Apply database migrations programmatically",
+  "description": "Simple, idempotent database migrations for node-pg",
   "main": "index.js",
   "scripts": {
     "test": "ava"
   },
   "author": "Mark McKelvy",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mmckelvy/apply-migrations.git"
+  },
   "dependencies": {
     "@mmckelvy/diff-arrays": "^1.0.1",
     "@mmckelvy/pg-query": "^1.2.0",
