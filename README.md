@@ -1,5 +1,5 @@
 # Apply migrations
-Simple, predictable migrations for [node-pg](https://node-postgres.com/).
+Simple, idempotent migrations for [node-pg](https://node-postgres.com/).
 
 ## Install
 ```
@@ -34,6 +34,8 @@ create table migration (
   created_at timestamp with time zone default current_timestamp
 );
 ```
+
+The `migration` table will be used to check if a particular migration has already been applied.
 
 Once you have your directory with your migration files set up, in a separate file import the `applyMigrations` function and apply your migrations:
 
