@@ -14,10 +14,10 @@
   },
   "dependencies": {
     "@mmckelvy/diff-arrays": "^1.0.1",
-    "@mmckelvy/pg-query": "^1.2.0",
-    "pg": "^8.3.0"
+    "@mmckelvy/pg-query": "^1.2.0"
   },
   "devDependencies": {
-    "ava": "^3.10.1"
+    "ava": "^3.10.1",
+    "pg": "^8.3.0"
   }
 }
