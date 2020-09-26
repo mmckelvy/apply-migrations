@@ -9,4 +9,3 @@ create table user_account (
   first_name text not null,
   last_name text not null
 );
-

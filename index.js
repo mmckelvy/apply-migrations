@@ -44,9 +44,6 @@ module.exports = async function applyMigrations({ pool, src }) {
     // No migrations, bail.
     if (!pendingMigrations.length) {
       console.log('No migrations to apply.');
-
-      await pool.end();
-      console.log('Ended the migration pool.');
       return;
     }
 
@@ -76,23 +73,14 @@ module.exports = async function applyMigrations({ pool, src }) {
 
       } catch (err) {
         console.log(`${migration} FAILED.`);
-        // pass control to the main error handler.
+        // Don't proceed with any additional migrations.
         throw err;
       }
-
-      /*
-      Success. End the pool and log the results.
-      */
-
-      await pool.end();
-      console.log('Ended the migration pool.');
     }
 
   // Main error handler
   } catch (err) {
     console.log('There was a problem with the migrations:\n');
     console.log(err);
-    await pool.end();
-    console.log('Ended the migration pool.');
   }
 };
