@@ -4,7 +4,7 @@
   "description": "Simple, idempotent database migrations for node-pg",
   "main": "index.js",
   "scripts": {
-    "test": "ava"
+    "test": "ava --verbose"
   },
   "author": "Mark McKelvy",
   "license": "MIT",
