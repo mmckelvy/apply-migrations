@@ -78,7 +78,7 @@ Notes:
 * You will be responsible for instantiating and ending the pool, as well as creating the `migration` table (see suggested usage above).
 * If a migration fails, `applyMigrations` will abort immediately.  No further migrations will be applied.
 
---
+----
 #### pool
 Type: `object`
 
