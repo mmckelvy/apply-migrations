@@ -1,6 +1,6 @@
 {
   "name": "@mmckelvy/apply-migrations",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Simple, idempotent database migrations for node-pg",
   "main": "index.js",
   "scripts": {
