@@ -72,7 +72,7 @@ const applyMigrations = require('@mmckelvy/apply-migrations');
 ### applyMigrations({ pool, src })
 Returns `void`.
 
-Executes a sequence of `.sql` files (migrations) in ascending order.  Upon successful execution of a migration, records the migration in a `migration` table.
+Executes a sequence of `.sql` files (migrations) in ascending order.  Upon successful execution of each migration, records the migration in a `migration` table.
 
 Notes:
 * You will be responsible for instantiating and ending the pool, as well as creating the `migration` table (see suggested usage above).
