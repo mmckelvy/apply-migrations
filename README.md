@@ -3,11 +3,15 @@ Simple, idempotent migrations for [node-pg](https://node-postgres.com/).
 
 ## Install
 ```
-npm install @mmckelvy/apply-migrations --save
+npm install @mmckelvy/apply-migrations --save-dev
 ```
 
-## Usage
-Create a directory and add your migrations as `.sql` files.  The naming convention for your files is as follows:
+## Suggested usage
+For a full example, see the `examples` folder.
+
+Create a directory called `migrations` and add a file called `index.js`.
+
+Create a child directory called `src` and add your migrations to `src` as `.sql` files.  The naming convention for your files is as follows:
 
 ```
 <order number>[separator]<migration name>.sql
@@ -25,7 +29,7 @@ v003_drop-constraint.sql
 
 **The only thing that matters is the first number that appears in the filename.**  That will be used to sort the migration files in ascending order.  Using a separator such as `_` is optional, but encouraged for your own readability.
 
-Include the following migration table somewhere in your first migration file:
+Include the following migration table at the top of your first migration file:
 
 ```
 create table migration (
@@ -37,28 +41,56 @@ create table migration (
 
 The `migration` table will be used to check if a particular migration has already been applied.
 
-Once you have your directory with your migration files set up, in a separate file import the `applyMigrations` function and apply your migrations:
+Once you have your `src` directory with your migration files set up, import the `applyMigrations` function in `index.js` and apply your migrations:
 
 ```
 const { Pool } = require('pg');
 const applyMigrations = require('@mmckelvy/apply-migrations');
 
 // an instance of a typical node-pg pool.
-const pool = new Pool({
-  host: 'localhost',
-  database: db,
-  port: 5432,
-  user: process.env.USER,
-  password: null,
-  max: 10
-});
+(async () => {
+  const pool = new Pool({
+    host: 'localhost',
+    database: db,
+    port: 5432,
+    user: process.env.USER,
+    password: null,
+    max: 10
+  });
 
-await applyMigrations({
-  pool,
-  src: `${__dirname}/src` // assumes your migration directory is called 'src'
-});
+  await applyMigrations({
+    pool,
+    src: `${__dirname}/src` // assumes your migration directory is called 'src'
+  });
+
+  await pool.end();
+})();
 
 ```
+
+## API
+### applyMigrations({ pool, src })
+Returns `void`.
+
+Executes a sequence of `.sql` files (migrations) in ascending order.  Upon successful execution of a migration, records the migration in a `migration` table.
+
+Notes:
+* You will be responsible for instantiating and ending the pool, as well as creating the `migration` table (see suggested usage above).
+* If a migration fails, `applyMigrations` will abort immediately.  No further migrations will be applied.
+
+--
+#### pool
+Type: `object`
+
+A node-pg [pool](https://node-postgres.com/features/pooling) instance.  Generally you'll want to use the same pool parameters as those from your app (i.e. same host, database, port, etc.).
+
+Note that after the migrations run, you should `end` the pool by calling `pool.end()` (see suggested usage above).
+
+#### src
+Type: `string`
+
+A path to the directory with your migrations.  It's generally easiest to make this directory a sibling to the script where you call `applyMigrations`.
+
 
 ## Test
 ```
